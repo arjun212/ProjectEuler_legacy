@@ -8,27 +8,16 @@ public class Problem499 {
 
 	final static int M = 2; // Cost of Game
 	final static int T = 1; // Threshold
-	final static int repeats = 100; // Repeats of Experiment
-	static int OriginalS = 2;
-	static int S; // Gamblers fortune
-	static Integer Pot = new Integer(1);
+	final static int repeats = 1000; // Repeats of Experiment
+//	static int OriginalS = 2;
+//	static int S; // Gamblers fortune
+	static Gambler g = new Gambler(2);
+	static Pot pot = new Pot();
 
-	public static void doublePot() {
-		Pot *= 2;
-	}
-
-	public static void takePot() {
-		S += Pot;
-		Pot = 0;
-	}
-
-	public static void reset() {
-		Pot = new Integer(1);
-		S = OriginalS;
-	}
+	
 
 	public static boolean canPlay() {
-		return (S >= M);
+		return (g.canPay(M));
 	}
 
 	public static boolean flipCoin() {
@@ -39,11 +28,11 @@ public class Problem499 {
 
 	public static void playOneGame() {
 		if (canPlay()) {
-			S -= M;
+			g.pay(M);;
 			while (flipCoin()) {
-				doublePot();
+				pot.doublePot();
 			}
-			takePot();
+			g.gain(pot.takePot());
 		}
 	}
 
@@ -60,8 +49,8 @@ public class Problem499 {
 
 	public static void print() {
 		System.out.println("\n");
-		System.out.println("Pot is worth : " + Pot);
-		System.out.println("Gambler is worth : " + S);
+		System.out.println("Pot is worth : " + pot);
+		System.out.println("Gambler is worth : " + g);
 	}
 
 	public static int avg(List<Integer> result) {
@@ -71,9 +60,13 @@ public class Problem499 {
 		}
 		return sum / result.size();
 	}
+	
+	public static void reset(){
+		pot.reset();
+		g.reset();
+	}
 
 	public static void main(String[] args) {
-		reset();
 		List<Integer> results = new ArrayList<Integer>();
 		System.out.println(playGames());
 		for (int i = 0; i < repeats; i++) {
