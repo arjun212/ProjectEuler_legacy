@@ -1,4 +1,4 @@
-package problem18;
+package problem67;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class Problem18 {
+public class Problem67 {
 
-	static final String dataFile = "./src/problem18/data2";
+	static final String dataFile = "./src/problem67/data";
 
 	static TreeNode root;
 
@@ -69,7 +69,7 @@ public class Problem18 {
 		qu.add(root);
 		while (!qu.isEmpty()) {
 			TreeNode head = qu.remove();
-			head.pathCost = head.maxParent() + head.value;
+			head.pathCost = head.maxParent();
 			if (head.lChild != null) qu.add(head.lChild);
 			if (head.rChild != null) qu.add(head.rChild);
 		}
@@ -87,7 +87,9 @@ public class Problem18 {
 	
 	public static void main(String[] args) throws IOException {
 		importData();
+		System.out.println("IMPORTDING DATA COMPLETE " + leafNodes.size());
 		updatePathCosts();
+		System.out.println("UPDATING PATH COSTS COMPLETE");
 		System.out.println(getBiggestPathCost());
 		
 	}
