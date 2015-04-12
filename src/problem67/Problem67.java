@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+//Answer = 7273
+
 public class Problem67 {
 
 	static final String dataFile = "./src/problem67/data";
@@ -13,7 +15,7 @@ public class Problem67 {
 	static TreeNode root;
 
 	static ArrayList<TreeNode> leafNodes = new ArrayList<TreeNode>();
-	
+
 	public static int getRowSize(int row) {
 		int acc = 0;
 		for (int i = 1; i <= row; i++) {
@@ -58,20 +60,19 @@ public class Problem67 {
 		sc.close();
 	}
 
-//	public static void printTree(TreeNode x) {
-//		System.out.println(x.pathCost);
-//		if (x.lChild != null) printTree(x.lChild);
-//		if (x.rChild != null) printTree(x.rChild);
-//	}
-	
 	public static void updatePathCosts() {
 		LinkedList<TreeNode> qu = new LinkedList<TreeNode>();
 		qu.add(root);
 		while (!qu.isEmpty()) {
 			TreeNode head = qu.remove();
-			head.pathCost = head.maxParent();
-			if (head.lChild != null) qu.add(head.lChild);
-			if (head.rChild != null) qu.add(head.rChild);
+			head.pathCost += head.maxParent();
+			if ((head.lChild != null) && (!qu.contains(head.lChild))) {
+				qu.add(head.lChild);
+			}
+			if ((head.rChild != null) && (!qu.contains(head.rChild))) {
+				qu.add(head.rChild);
+
+			}
 		}
 	}
 
@@ -80,18 +81,16 @@ public class Problem67 {
 		for (TreeNode t : leafNodes) {
 			if (biggestPathCost < t.pathCost) {
 				biggestPathCost = t.pathCost;
-			}						
+			}
 		}
 		return biggestPathCost;
 	}
-	
-	public static void main(String[] args) throws IOException {
+
+	public static void main(String[] args) throws IOException, InterruptedException {
 		importData();
-		System.out.println("IMPORTDING DATA COMPLETE " + leafNodes.size());
 		updatePathCosts();
-		System.out.println("UPDATING PATH COSTS COMPLETE");
 		System.out.println(getBiggestPathCost());
-		
+
 	}
 
 }

@@ -5,8 +5,8 @@ public class TreeNode {
 	public TreeNode rParent;
 	public TreeNode lChild;
 	public TreeNode rChild;
-	int value;
-	int pathCost;
+	public int value;
+	public int pathCost;
 	
 
 	public TreeNode(TreeNode left, TreeNode right, int val) {
@@ -15,6 +15,7 @@ public class TreeNode {
 		if (lParent != null) this.lParent.rChild = this;
 		if (rParent != null) this.rParent.lChild = this;
 		this.value = val;
+		this.pathCost = val;
 	}
 
 	public int maxParent() {

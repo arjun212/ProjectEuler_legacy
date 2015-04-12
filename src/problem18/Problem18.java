@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import problem67.TreeNode;
+
+//Answer = 1074
+
 public class Problem18 {
 
 	static final String dataFile = "./src/problem18/data2";
@@ -58,20 +62,19 @@ public class Problem18 {
 		sc.close();
 	}
 
-//	public static void printTree(TreeNode x) {
-//		System.out.println(x.pathCost);
-//		if (x.lChild != null) printTree(x.lChild);
-//		if (x.rChild != null) printTree(x.rChild);
-//	}
-	
 	public static void updatePathCosts() {
 		LinkedList<TreeNode> qu = new LinkedList<TreeNode>();
 		qu.add(root);
 		while (!qu.isEmpty()) {
 			TreeNode head = qu.remove();
-			head.pathCost = head.maxParent() + head.value;
-			if (head.lChild != null) qu.add(head.lChild);
-			if (head.rChild != null) qu.add(head.rChild);
+			head.pathCost += head.maxParent();
+			if ((head.lChild != null) && (!qu.contains(head.lChild))) {
+				qu.add(head.lChild);
+			}
+			if ((head.rChild != null) && (!qu.contains(head.rChild))) {
+				qu.add(head.rChild);
+
+			}
 		}
 	}
 
