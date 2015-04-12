@@ -83,7 +83,6 @@ public class Problem19 {
 		while (!current.equals("01012001")) {
 			if ((isSunday(daysSinceStart)) && (isFirstOfMonth(current))) {
 				count++;
-				System.out.println(current);
 			}
 			current = getNextDate(current);
 			daysSinceStart++;
